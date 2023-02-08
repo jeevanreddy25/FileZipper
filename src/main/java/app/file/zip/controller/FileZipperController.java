@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,10 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class FileZipperController {
 	
-	@GetMapping(value = {"/","home","index"})
-	public String HomePage() {
-		System.out.println("Hi ");
-		return "index";
+	@GetMapping(value = {"/","index","home"})
+	public ModelAndView HomePage() {
+	    ModelAndView modelAndView = new ModelAndView();
+	    modelAndView.setViewName("index");
+	    return modelAndView;
 	}
 
 
