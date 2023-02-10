@@ -5,10 +5,20 @@
 	<meta charset="ISO-8859-1">
 	<title>File Zipper</title>
 </head>
-
 <body>
 	<div>
-		Welcome to the File Zipper :)
+		<p>Welcome to the File Zipper :)</p>
+	</div>
+	<form method="post" th:action="@{/file}" enctype="multipart/form-data">
+		<h3>
+			<input type="file" name="file" class="form-control-file" style="width:25%">
+			<button type="submit" class="btn btn-primary">Zippit</button>
+		</h3>
+	</form>
+	<div th:each="response : ${res}">
+		<form method="post" th:action="@{/download}" enctype="multipart/form-data">
+		<h3><button type="button" class="btn btn-success">Download Zip File</button></h3>
+		</form>
 	</div>
 </body>
 

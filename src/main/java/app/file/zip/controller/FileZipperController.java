@@ -1,30 +1,36 @@
 package app.file.zip.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import app.file.zip.service.FileZipperService;
 import lombok.extern.slf4j.Slf4j;
 
 
-
 @Slf4j
-@RestController
+@Controller
 public class FileZipperController {
 	
-	@GetMapping(value = {"/","index","home"})
-	public ModelAndView HomePage() {
-	    ModelAndView modelAndView = new ModelAndView();
-	    modelAndView.setViewName("index");
-	    return modelAndView;
+	@Autowired
+	FileZipperService fileZipperService;
+	
+	@GetMapping(value = {"/","/home"})
+	public String homePage() {
+	    return "index";
 	}
 
-
-	public ResponseEntity<Object> getGeneralFile(@RequestPart MultipartFile file){
-		System.out.println("File Name : "+file.getOriginalFilename());
-		return null;
+	@PostMapping("/index")
+	public void getGeneralFile(@RequestParam("file") MultipartFile file,Model model) throws IOException{
+		log.info("Api Called through html");
+		fileZipperService.convertToZipFile(file);
+		model.addAttribute("res", "Downnload Zip File");
+//		return "index";
 	}
 }
